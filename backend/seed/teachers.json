@@ -1,0 +1,94 @@
+{
+  "teachers": [
+    {
+      "id": 1,
+      "name": "Dr. Priya Kulkarni",
+      "email": "priya.kulkarni@college.com",
+      "subject": "Data Structures",
+      "experience_years": 12,
+      "department": "Computer Science",
+      "phone": "9823456710"
+    },
+    {
+      "id": 2,
+      "name": "Prof. Rajesh Mehta",
+      "email": "rajesh.mehta@college.com",
+      "subject": "Database Management",
+      "experience_years": 15,
+      "department": "Information Technology",
+      "phone": "9834567120"
+    },
+    {
+      "id": 3,
+      "name": "Dr. Ananya Iyer",
+      "email": "ananya.iyer@college.com",
+      "subject": "Digital Signal Processing",
+      "experience_years": 10,
+      "department": "Electronics & Communication",
+      "phone": "9845671230"
+    },
+    {
+      "id": 4,
+      "name": "Prof. Vikram Singh",
+      "email": "vikram.singh@college.com",
+      "subject": "Thermodynamics",
+      "experience_years": 18,
+      "department": "Mechanical Engineering",
+      "phone": "9856712340"
+    },
+    {
+      "id": 5,
+      "name": "Dr. Meera Patel",
+      "email": "meera.patel@college.com",
+      "subject": "Structural Analysis",
+      "experience_years": 14,
+      "department": "Civil Engineering",
+      "phone": "9867123450"
+    },
+    {
+      "id": 6,
+      "name": "Prof. Arjun Nair",
+      "email": "arjun.nair@college.com",
+      "subject": "Machine Learning",
+      "experience_years": 8,
+      "department": "Data Science",
+      "phone": "9871234560"
+    },
+    {
+      "id": 7,
+      "name": "Dr. Kavita Desai",
+      "email": "kavita.desai@college.com",
+      "subject": "Financial Management",
+      "experience_years": 20,
+      "department": "MBA",
+      "phone": "9812345670"
+    },
+    {
+      "id": 8,
+      "name": "Prof. Rohit Gupta",
+      "email": "rohit.gupta@college.com",
+      "subject": "Web Development",
+      "experience_years": 9,
+      "department": "BCA",
+      "phone": "9823456781"
+    },
+    {
+      "id": 9,
+      "name": "Dr. Sunita Rao",
+      "email": "sunita.rao@college.com",
+      "subject": "Operating Systems",
+      "experience_years": 11,
+      "department": "Computer Science",
+      "phone": "9834567812"
+    },
+    {
+      "id": 10,
+      "name": "Prof. Deepak Joshi",
+      "email": "deepak.joshi@college.com",
+      "subject": "Network Security",
+      "experience_years": 13,
+      "department": "Information Technology",
+      "phone": "9845678123"
+    }
+  ]
+}

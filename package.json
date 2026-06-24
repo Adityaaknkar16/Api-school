@@ -1,0 +1,12 @@
+{
+  "name": "api-school-dataset",
+  "version": "1.0.0",
+  "description": "Practice dataset for API Playground — students, courses, and teachers",
+  "main": "seed.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "seed": "node -e \"require('./seed')()\""
+  }
+}

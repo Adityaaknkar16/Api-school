@@ -1,0 +1,68 @@
+{
+  "courses": [
+    {
+      "id": 1,
+      "course_name": "Computer Science",
+      "department": "Engineering",
+      "duration_years": 4,
+      "total_seats": 60,
+      "fee_per_year": 85000
+    },
+    {
+      "id": 2,
+      "course_name": "Information Technology",
+      "department": "Engineering",
+      "duration_years": 4,
+      "total_seats": 55,
+      "fee_per_year": 82000
+    },
+    {
+      "id": 3,
+      "course_name": "Electronics & Communication",
+      "department": "Engineering",
+      "duration_years": 4,
+      "total_seats": 50,
+      "fee_per_year": 80000
+    },
+    {
+      "id": 4,
+      "course_name": "Mechanical Engineering",
+      "department": "Engineering",
+      "duration_years": 4,
+      "total_seats": 60,
+      "fee_per_year": 78000
+    },
+    {
+      "id": 5,
+      "course_name": "Civil Engineering",
+      "department": "Engineering",
+      "duration_years": 4,
+      "total_seats": 45,
+      "fee_per_year": 75000
+    },
+    {
+      "id": 6,
+      "course_name": "Data Science",
+      "department": "Science",
+      "duration_years": 3,
+      "total_seats": 40,
+      "fee_per_year": 95000
+    },
+    {
+      "id": 7,
+      "course_name": "MBA",
+      "department": "Management",
+      "duration_years": 2,
+      "total_seats": 80,
+      "fee_per_year": 120000
+    },
+    {
+      "id": 8,
+      "course_name": "BCA",
+      "department": "Computer Applications",
+      "duration_years": 3,
+      "total_seats": 50,
+      "fee_per_year": 65000
+    }
+  ]
+}
