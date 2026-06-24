@@ -12,6 +12,10 @@ import axios from 'axios';
 import { Sparkles, Terminal, Shield, Cpu, RefreshCw, Layers, Award, ArrowRight } from 'lucide-react';
 
 export default function App() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
   const [selectedDataset, setSelectedDataset] = useState('students');
   const [selectedLanguage, setSelectedLanguage] = useState('javascript');
   const [selectedOperation, setSelectedOperation] = useState('getAll');
@@ -24,6 +28,13 @@ export default function App() {
   
   const [editorCopied, setEditorCopied] = useState(false);
   const [responseCopied, setResponseCopied] = useState(false);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   // Progress tracker state
   const [progress, setProgress] = useState(() => {
@@ -229,10 +240,20 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col font-sans antialiased overflow-x-hidden relative">
+    <div className="min-h-screen bg-themeBg text-themeText flex flex-col font-sans antialiased overflow-x-hidden relative transition-colors duration-300">
       
       {/* Toast provider */}
-      <Toaster position="bottom-right" reverseOrder={false} />
+      <Toaster 
+        position="bottom-right" 
+        reverseOrder={false}
+        toastOptions={{
+          style: {
+            background: theme === 'dark' ? '#0b0f19' : '#ffffff',
+            color: theme === 'dark' ? '#f3f4f6' : '#0f172a',
+            border: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(15,23,42,0.08)'
+          }
+        }}
+      />
 
       {/* Floating Animated Orbs */}
       <div className="orb w-[300px] h-[300px] bg-purple-600/10 top-[10%] left-[10%]"></div>
@@ -244,7 +265,9 @@ export default function App() {
         onReset={handleResetDatabase} 
         isResetting={isResetting} 
         progressCount={progressCount} 
-        totalCount={15} 
+        totalCount={15}
+        theme={theme}
+        setTheme={setTheme}
       />
 
       {/* HERO / LANDING SECTION */}
@@ -255,16 +278,16 @@ export default function App() {
           transition={{ duration: 0.8 }}
           className="space-y-6"
         >
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-semibold text-indigo-400">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-themeCard/50 border border-themeBorder text-xs font-semibold text-indigo-600 dark:text-indigo-400">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Interactive REST API Learning Engine</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white leading-tight max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-themeText leading-tight max-w-4xl mx-auto">
             Practice <span className="shimmer-text">APIs & CRUD</span> without installing anything.
           </h1>
 
-          <p className="text-base md:text-lg text-slate-400 max-w-2xl mx-auto font-normal leading-relaxed">
+          <p className="text-base md:text-lg text-themeMuted max-w-2xl mx-auto font-normal leading-relaxed">
             The fastest way for developers to learn REST API and CRUD operations — right in your browser. Select a language, write queries, and master requests in real-time.
           </p>
 
@@ -279,28 +302,27 @@ export default function App() {
               <ArrowRight className="w-4 h-4" />
             </motion.a>
             <motion.a
-              whileHover={{ scale: 1.05, bg: 'rgba(255,255,255,0.06)' }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               href="#docs"
-              className="px-6 py-3 rounded-full bg-white/[0.03] border border-white/[0.08] text-slate-300 text-sm font-bold hover:text-white transition duration-200"
+              className="px-6 py-3 rounded-full bg-themeCard/30 border border-themeBorder text-themeMuted text-sm font-bold hover:text-themeText transition duration-200"
             >
               View Docs
             </motion.a>
           </div>
 
           {/* Stats Badges row */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 max-w-4xl mx-auto pt-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 max-w-4xl mx-auto pt-8">
             {[
               { label: '50 Students', icon: '👨‍🎓' },
               { label: '8 Courses', icon: '📚' },
               { label: '10 Teachers', icon: '👩‍🏫' },
               { label: '4 Languages', icon: '⚡' },
-              { label: '5 Operations', icon: '🛠️' },
-              { label: 'Free Forever', icon: '🎁' }
+              { label: '5 Operations', icon: '🛠️' }
             ].map((stat, idx) => (
               <div 
                 key={idx} 
-                className="flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-white/[0.02] border border-white/[0.04] text-xs font-semibold text-slate-400"
+                className="flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl bg-themeCard/20 border border-themeBorder text-xs font-semibold text-themeMuted"
               >
                 <span>{stat.icon}</span>
                 <span>{stat.label}</span>
@@ -317,8 +339,8 @@ export default function App() {
         <div className="lg:col-span-4 flex flex-col space-y-6">
           
           {/* Card-Style Dataset Selector */}
-          <div className="glass-panel p-5 shadow-xl shadow-black/20">
-            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-4">
+          <div className="glass-panel p-5 shadow-xl shadow-black/5 dark:shadow-black/20">
+            <label className="text-[10px] font-bold text-themeMuted uppercase tracking-widest block mb-4">
               Select Dataset
             </label>
             <div className="grid grid-cols-3 gap-3">
@@ -337,13 +359,13 @@ export default function App() {
                     }}
                     className={`flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all duration-300 ${
                       isSelected
-                        ? 'bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border-indigo-500 text-white shadow-lg shadow-indigo-500/15 scale-105'
-                        : 'bg-white/[0.01] border-white/[0.04] text-slate-400 hover:text-slate-200 hover:border-white/[0.1]'
+                        ? 'bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border-indigo-500 text-themeText shadow-lg shadow-indigo-500/15 scale-105'
+                        : 'bg-themeCard/20 border-themeBorder text-themeMuted hover:text-themeText hover:border-themeBorder/80'
                     }`}
                   >
                     <span className="text-2xl mb-1">{card.icon}</span>
                     <span className="text-xs font-bold">{card.label}</span>
-                    <span className="text-[9px] text-slate-500 mt-0.5">{card.count}</span>
+                    <span className="text-[9px] text-themeMuted/60 mt-0.5">{card.count}</span>
                   </button>
                 );
               })}
@@ -351,7 +373,7 @@ export default function App() {
           </div>
 
           {/* Lang and CRUD Selection Card */}
-          <div className="glass-panel p-5 space-y-6 shadow-xl shadow-black/20">
+          <div className="glass-panel p-5 space-y-6 shadow-xl shadow-black/5 dark:shadow-black/20">
             <LanguageSelector 
               selectedLanguage={selectedLanguage} 
               onChange={(lang) => {
@@ -375,8 +397,8 @@ export default function App() {
         </div>
 
         {/* Right Split Panel - Editor + Response Terminal */}
-        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 lg:h-[calc(100vh-140px)]">
-          <div className="h-full">
+        <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="h-full min-w-0">
             <Editor 
               code={code}
               onChange={handleEditorChange}
@@ -385,10 +407,11 @@ export default function App() {
               isExecuting={isExecuting}
               copied={editorCopied}
               onCopy={copyEditorCode}
+              theme={theme}
             />
           </div>
 
-          <div className="h-full">
+          <div className="h-full min-w-0">
             <ResponsePanel 
               response={response}
               responseTime={responseTime}
@@ -401,26 +424,26 @@ export default function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="mt-24 border-t border-white/[0.06] bg-[#08080c] py-12 relative z-10">
+      <footer className="mt-24 border-t border-themeBorder bg-themeCard/80 backdrop-blur-md py-12 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
               <div className="w-6 h-6 rounded bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center">
                 <span className="text-xs font-bold text-white">✦</span>
               </div>
-              <span className="text-sm font-bold text-white">API Playground</span>
+              <span className="text-sm font-bold text-themeText">API Playground</span>
             </div>
-            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+            <p className="text-xs text-themeMuted leading-relaxed max-w-sm">
               Practice REST APIs and CRUD commands directly inside your browser. Built to help developers master server endpoints with zero local installations.
             </p>
           </div>
           <div className="flex flex-col md:items-end justify-between gap-4">
-            <div className="flex space-x-6 text-xs text-slate-400 font-semibold">
-              <a href="#github" className="hover:text-white transition">GitHub</a>
-              <a href="#twitter" className="hover:text-white transition">Twitter</a>
-              <a href="#docs" className="hover:text-white transition">Docs</a>
+            <div className="flex space-x-6 text-xs text-themeMuted font-semibold">
+              <a href="#github" className="hover:text-themeText transition">GitHub</a>
+              <a href="#twitter" className="hover:text-themeText transition">Twitter</a>
+              <a href="#docs" className="hover:text-themeText transition">Docs</a>
             </div>
-            <p className="text-[11px] text-slate-600">
+            <p className="text-[11px] text-themeMuted/70">
               &copy; {new Date().getFullYear()} API Playground. All rights reserved.
             </p>
           </div>

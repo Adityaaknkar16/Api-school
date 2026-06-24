@@ -10,8 +10,8 @@ const languages = [
 export default function LanguageSelector({ selectedLanguage, onChange }) {
   return (
     <div className="flex flex-col space-y-2">
-      <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Selected Language</label>
-      <div className="flex flex-wrap gap-2 p-1 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+      <label className="text-[10px] font-bold text-themeMuted uppercase tracking-widest">Selected Language</label>
+      <div className="flex flex-wrap gap-2 p-1 rounded-xl bg-themeCard/30 border border-themeBorder">
         {languages.map((lang) => {
           const isSelected = selectedLanguage === lang.id;
           return (
@@ -21,7 +21,7 @@ export default function LanguageSelector({ selectedLanguage, onChange }) {
               className={`flex items-center space-x-2 py-2 px-4 rounded-lg text-xs font-semibold transition-all duration-300 ${
                 isSelected
                   ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/20 scale-105 border border-indigo-400/30'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]'
+                  : 'text-themeMuted hover:text-themeText hover:bg-themeCard/80'
               }`}
             >
               <span>{lang.icon}</span>
