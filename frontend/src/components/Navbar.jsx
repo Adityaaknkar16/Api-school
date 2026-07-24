@@ -25,7 +25,7 @@ export default function Navbar({ onReset, isResetting, progressCount, totalCount
             className="relative py-1 transition-colors duration-200 hover:text-themeText group"
           >
             {link}
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-200 group-hover:w-full"></span>
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-200 group-hover:w-full"></span>
           </a>
         ))}
       </div>
