@@ -59,8 +59,8 @@ api-playground/
 ## 🛠 Setup & Run Instructions
 
 ### Prerequisites
-- Node.js (>= 18) or Docker.
-- A **MongoDB Atlas** database cluster (or local MongoDB database).
+- Node.js (>= 18) (using `nvm` is recommended for managing Node versions) or Docker.
+- A **MongoDB Atlas** database cluster (or local MongoDB database >= 6.0).
 
 ### Database Configuration
 Set the `MONGODB_URI` connection string inside your `.env` file:
