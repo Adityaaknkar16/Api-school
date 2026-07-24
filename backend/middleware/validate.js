@@ -1,25 +1,32 @@
 const { body, validationResult } = require("express-validator");
 
+// Validation constants
+const STUDENT_LIMITS = {
+  name: { min: 2, max: 50 },
+  age: { min: 15, max: 60 },
+  semester: { min: 1, max: 8 }
+};
+
 const validateStudent = [
   body("name")
     .trim()
-    .isLength({ min: 2, max: 50 })
-    .withMessage("Name must be between 2 and 50 characters")
+    .isLength(STUDENT_LIMITS.name)
+    .withMessage(`Name must be between ${STUDENT_LIMITS.name.min} and ${STUDENT_LIMITS.name.max} characters`)
     .escape(),
   body("email")
     .isEmail()
     .withMessage("Provide a valid email address")
     .normalizeEmail(),
   body("age")
-    .isInt({ min: 15, max: 60 })
-    .withMessage("Age must be between 15 and 60"),
+    .isInt(STUDENT_LIMITS.age)
+    .withMessage(`Age must be between ${STUDENT_LIMITS.age.min} and ${STUDENT_LIMITS.age.max}`),
   body("phone")
     .isMobilePhone("en-IN")
     .withMessage("Phone must be a valid Indian mobile number"),
   body("course").trim().notEmpty().withMessage("Course is required").escape(),
   body("semester")
-    .isInt({ min: 1, max: 8 })
-    .withMessage("Semester must be between 1 and 8"),
+    .isInt(STUDENT_LIMITS.semester)
+    .withMessage(`Semester must be between ${STUDENT_LIMITS.semester.min} and ${STUDENT_LIMITS.semester.max}`),
   body("grade")
     .isIn(["A+", "A", "B+", "B", "C+", "C", "F"])
     .withMessage("Grade must be one of A+, A, B+, B, C+, C, F"),
