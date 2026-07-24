@@ -106,3 +106,11 @@ MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/api_playgrou
    npm run dev
    ```
 3. Open `http://localhost:5173` in your browser.
+
+---
+
+## 🤝 Contributing
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/Adityaaknkar16/Api-school/issues).
+
+## 📄 License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute it as needed.
