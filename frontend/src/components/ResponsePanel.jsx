@@ -1,9 +1,10 @@
-import React from 'react';
-import { Terminal, Copy, Check, Zap } from 'lucide-react';
+import React, { useState } from 'react';
+import { Terminal, Copy, Check, Zap, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ResponsePanel({ response, responseTime, copied, onCopy }) {
   const hasResponse = !!response;
+  const [hideSecrets, setHideSecrets] = useState(true);
   
   let isSuccess = false;
   let statusText = '';
@@ -14,6 +15,35 @@ export default function ResponsePanel({ response, responseTime, copied, onCopy }
     isSuccess = statusCode >= 200 && statusCode < 300;
     statusText = response.statusText || (isSuccess ? 'OK' : 'Error');
   }
+
+  // Helper to recursively mask sensitive fields
+  const maskSensitiveData = (obj) => {
+    if (obj === null || obj === undefined) return obj;
+    if (Array.isArray(obj)) {
+      return obj.map(maskSensitiveData);
+    }
+    if (typeof obj === 'object') {
+      const masked = {};
+      for (const [k, v] of Object.entries(obj)) {
+        if (typeof v === 'string' && /password|token|secret|key|email|phone|auth/i.test(k)) {
+          if (k.toLowerCase() === 'email' && v.includes('@')) {
+            const [local, domain] = v.split('@');
+            masked[k] = local.length > 2 ? `${local.slice(0, 2)}••••@${domain}` : `••••@${domain}`;
+          } else if (k.toLowerCase() === 'phone') {
+            masked[k] = v.length > 4 ? `••••••${v.slice(-4)}` : '••••••••';
+          } else {
+            masked[k] = '••••••••';
+          }
+        } else if (typeof v === 'object') {
+          masked[k] = maskSensitiveData(v);
+        } else {
+          masked[k] = v;
+        }
+      }
+      return masked;
+    }
+    return obj;
+  };
 
   // Regex JSON Syntax Highlighter (using CSS classes mapped to variables)
   const highlightJSON = (jsonString) => {
@@ -54,7 +84,8 @@ export default function ResponsePanel({ response, responseTime, copied, onCopy }
     }
 
     try {
-      const jsonStr = JSON.stringify(response.data, null, 2);
+      const dataToDisplay = hideSecrets ? maskSensitiveData(response.data) : response.data;
+      const jsonStr = JSON.stringify(dataToDisplay, null, 2);
       return highlightJSON(jsonStr);
     } catch (err) {
       return String(response.data);
@@ -70,19 +101,46 @@ export default function ResponsePanel({ response, responseTime, copied, onCopy }
           <span className="text-xs font-bold text-themeText uppercase tracking-widest">Response Console</span>
         </div>
         
-        {hasResponse && !response.isLocalError && (
-          <button
-            onClick={() => onCopy(JSON.stringify(response.data, null, 2))}
-            className="p-2 rounded-lg bg-themeCard/40 hover:bg-themeCard/80 text-themeMuted hover:text-themeText border border-themeBorder transition duration-200"
-            title="Copy Output"
-          >
-            {copied ? (
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-            ) : (
-              <Copy className="w-3.5 h-3.5" />
-            )}
-          </button>
-        )}
+        <div className="flex items-center space-x-2">
+          {hasResponse && !response.isLocalError && (
+            <>
+              {/* Hide/Show Secrets Toggle */}
+              <button
+                onClick={() => setHideSecrets(!hideSecrets)}
+                className={`flex items-center space-x-1.5 px-2.5 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200 ${
+                  hideSecrets 
+                    ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20 hover:bg-indigo-500/20' 
+                    : 'bg-themeCard/40 hover:bg-themeCard/80 text-themeMuted hover:text-themeText border-themeBorder'
+                }`}
+                title={hideSecrets ? "Show Secrets" : "Hide Secrets"}
+              >
+                {hideSecrets ? (
+                  <>
+                    <EyeOff className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Secrets Hidden</span>
+                  </>
+                ) : (
+                  <>
+                    <Eye className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Show Secrets</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={() => onCopy(JSON.stringify(hideSecrets ? maskSensitiveData(response.data) : response.data, null, 2))}
+                className="p-2 rounded-lg bg-themeCard/40 hover:bg-themeCard/80 text-themeMuted hover:text-themeText border border-themeBorder transition duration-200"
+                title="Copy Output"
+              >
+                {copied ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                ) : (
+                  <Copy className="w-3.5 h-3.5" />
+                )}
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       {/* Meta Row */}

@@ -296,7 +296,7 @@ export default function App() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               href="#playground"
-              className="flex items-center space-x-2 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-sm font-bold shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/45 transition duration-200"
+              className="btn-premium flex items-center space-x-2 px-6 py-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white text-sm font-bold shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/45 transition duration-200"
             >
               <span>Start Practicing</span>
               <ArrowRight className="w-4 h-4" />
@@ -305,7 +305,7 @@ export default function App() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               href="#docs"
-              className="px-6 py-3 rounded-full bg-themeCard/30 border border-themeBorder text-themeMuted text-sm font-bold hover:text-themeText transition duration-200"
+              className="btn-premium px-6 py-3 rounded-full bg-themeCard/30 border border-themeBorder text-themeMuted text-sm font-bold hover:text-themeText transition duration-200"
             >
               View Docs
             </motion.a>
