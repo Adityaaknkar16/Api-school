@@ -53,8 +53,8 @@ router.post('/', validateCourse, checkValidation, async (req, res, next) => {
       });
     }
 
-    // Auto-increment integer id
-    const maxCourse = await Course.findOne().sort({ id: -1 });
+    // Auto-increment integer id (fetch only id field to optimize performance)
+    const maxCourse = await Course.findOne().select('id').sort({ id: -1 });
     const nextId = maxCourse ? maxCourse.id + 1 : 1;
 
     const newCourse = await Course.create({
