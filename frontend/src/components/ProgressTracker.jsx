@@ -43,7 +43,7 @@ export default function ProgressTracker({ progress, selectedDataset }) {
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-2">
           <Trophy className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
-          <h3 className="text-xs font-bold text-themeText uppercase tracking-widest">Mastery Progress</h3>
+          <h3 className="text-xs font-extrabold text-themeText uppercase tracking-widest">Mastery Progress</h3>
         </div>
         <span className="text-xs font-mono font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full">
           {totalCompleted} / {totalTasks} Completed
