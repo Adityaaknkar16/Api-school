@@ -85,12 +85,12 @@ const validateTeacher = [
 const checkValidation = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    const errorDetails = errors.array().map((err) => ({ field: err.path, message: err.msg }));
+    console.info(`Validation failed for request to ${req.originalUrl}:`, JSON.stringify(errorDetails));
     return res.status(400).json({
       status: "error",
       message: "Validation failed",
-      errors: errors
-        .array()
-        .map((err) => ({ field: err.path, message: err.msg })),
+      errors: errorDetails,
     });
   }
   next();
