@@ -20,11 +20,13 @@ router.get('/', async (req, res, next) => {
 // GET single course
 router.get('/:id', async (req, res, next) => {
   try {
-    const course = await Course.findOne({ id: parseInt(req.params.id, 10) });
+    const courseId = parseInt(req.params.id, 10);
+    const course = await Course.findOne({ id: courseId });
     if (!course) {
+      console.warn(`Course lookup failed: ID ${courseId} not found`);
       return res.status(404).json({
         status: 'error',
-        message: `Course with ID ${req.params.id} not found`
+        message: `Course with ID ${courseId} not found`
       });
     }
     res.json({
